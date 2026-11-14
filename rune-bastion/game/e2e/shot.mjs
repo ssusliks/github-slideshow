@@ -1,0 +1,11 @@
+import { chromium, GL_ARGS } from './pw.mjs';
+const [url, out, wait = '6000'] = process.argv.slice(2);
+const browser = await chromium.launch({ args: GL_ARGS });
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+const page = await ctx.newPage();
+page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[console]', m.type(), m.text().slice(0, 300)); });
+page.on('pageerror', (e) => console.log('[pageerror]', e.message));
+await page.goto(url);
+await page.waitForTimeout(Number(wait));
+await page.screenshot({ path: out });
+await browser.close();

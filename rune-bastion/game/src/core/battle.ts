@@ -350,6 +350,7 @@ export class Battle {
     }
     st.cd = def.cooldown * Math.max(0.4, 1 - this.mods.abilityCd);
     s.stats.abilities++;
+    if (this.anyDead) { s.enemies = s.enemies.filter((e) => !e.dead); this.anyDead = false; }
     return OK;
   }
 

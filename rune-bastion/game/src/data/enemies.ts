@@ -33,16 +33,16 @@ function mk(id: string, world: number, arch: keyof typeof ARCH, look: EnemyDef['
 
 const list: EnemyDef[] = [
   // ---- World 1: Greenvale ----
-  mk('goblin', 1, 'grunt', { shape: 'biped', color: 0x6fae3d, accent: 0x7a4b2a, size: 0.34, extras: ['ears'] }),
+  mk('goblin', 1, 'grunt', { shape: 'biped', color: 0xc9d44a, accent: 0x7a3b2a, size: 0.34, extras: ['ears'] }),
   mk('wolf', 1, 'fast', { shape: 'quad', color: 0x8a8f99, accent: 0x4a4e57, size: 0.32 }),
-  mk('ogre', 1, 'armored', { shape: 'biped', color: 0x7d9a5b, accent: 0x6b6f7a, size: 0.5, extras: ['armor', 'club'] }),
+  mk('ogre', 1, 'armored', { shape: 'biped', color: 0xb8a86a, accent: 0x6b6f7a, size: 0.5, extras: ['armor', 'club'] }),
   mk('bat', 1, 'flying', { shape: 'flyer', color: 0x5b3f6e, accent: 0x2c1f38, size: 0.28 }),
   mk('shaman', 1, 'magic', { shape: 'biped', color: 0x4f9d8a, accent: 0xc94fd6, size: 0.36, extras: ['staff', 'hood'] },
     { abilities: [{ type: 'heal_aura', radius: 1.6, pctPerSec: 0.025 }] }),
-  mk('slime', 1, 'special', { shape: 'blob', color: 0x55c96b, accent: 0x2f8f47, size: 0.42 },
+  mk('slime', 1, 'special', { shape: 'blob', color: 0x4fd6c9, accent: 0x2f8f8a, size: 0.42 },
     { abilities: [{ type: 'split', into: 'slimelet', count: 2 }] }),
-  mk('slimelet', 1, 'grunt', { shape: 'blob', color: 0x7fe08f, accent: 0x2f8f47, size: 0.26 }, { hp: 16, bounty: 2, threat: 0.5 }),
-  mk('champion', 1, 'elite', { shape: 'biped', color: 0x4d8a2c, accent: 0xd9a441, size: 0.48, extras: ['ears', 'armor', 'banner'] },
+  mk('slimelet', 1, 'grunt', { shape: 'blob', color: 0x7fe8dc, accent: 0x2f8f8a, size: 0.26 }, { hp: 16, bounty: 2, threat: 0.5 }),
+  mk('champion', 1, 'elite', { shape: 'biped', color: 0xa9b82f, accent: 0x8a2f2f, size: 0.48, extras: ['ears', 'armor', 'banner'] },
     { abilities: [{ type: 'haste_aura', radius: 1.6, pct: 0.2 }] }),
 
   // ---- World 2: Frostpeak ----
@@ -89,7 +89,7 @@ const list: EnemyDef[] = [
     id: 'boss_grumbak', world: 1, tags: ['ground', 'boss'], hp: 1500, speed: 0.42, armor: 2, resist: { poison: 0.8 },
     bounty: 120, leak: 15, threat: 20,
     abilities: [{ type: 'summon', every: 8, count: 3, enemy: 'goblin' }, { type: 'haste_aura', radius: 2.2, pct: 0.3 }],
-    look: { shape: 'biped', color: 0x4d8a2c, accent: 0xf2c94c, size: 0.85, extras: ['ears', 'crown', 'club', 'armor'] },
+    look: { shape: 'biped', color: 0x9fb02a, accent: 0x7a2f2f, size: 0.85, extras: ['ears', 'crown', 'club', 'armor'] },
   },
   {
     id: 'boss_hrimgar', world: 2, tags: ['ground', 'boss'], hp: 2100, speed: 0.4, armor: 4, resist: { ice: 0.4, fire: 1.3 },
