@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "@capacitor-community/admob": "^8.3.0",
+    "@capacitor/android": "^8.6.2",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.6.2",
     "@capacitor/preferences": "^8.0.1",
     "@capgo/capacitor-social-login": "^8.7.11",
     "@capgo/native-purchases": "^8.9.16",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^8.6.2",
+    "@types/node": "^26.6.6",
     "@types/three": "^0.187.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.8",

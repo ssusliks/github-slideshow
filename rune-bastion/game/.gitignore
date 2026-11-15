@@ -10,3 +10,6 @@ android/app/src/main/assets/public/
 android/capacitor-cordova-android-plugins/
 ios/App/App/public/
 ios/App/Pods/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/App/CapApp-SPM/Package.resolved
