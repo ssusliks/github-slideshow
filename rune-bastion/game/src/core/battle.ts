@@ -492,13 +492,17 @@ export class Battle {
     this.emit({ t: 'wave', n: s.wave, boss: s.queue.some((q) => ENEMIES[q.e].tags.includes('boss')) });
   }
 
+  /**
+   * Health scales with the level multiplier; flat armor only with its square root, because the
+   * player's damage PER HIT grows far slower than total damage (which also grows through tower count).
+   */
   private spawnEnemy(defId: string, path: number, dist: number, hpMul: number, flyOverride?: boolean): EnemyState | null {
     const s = this.s, def = ENEMIES[defId];
     if (!def || s.enemies.length >= MAX_ENEMIES_ALIVE) return null;
     const boss = def.tags.includes('boss');
     const hp = clampNum(Math.round(def.hp * hpMul * (1 + this.mods.enemyHp)), 1);
     const e: EnemyState = {
-      id: s.nextId++, def: defId, hp, maxHp: hp, armor: def.armor * hpMul, path, fly: flyOverride ?? def.tags.includes('flying'), boss,
+      id: s.nextId++, def: defId, hp, maxHp: hp, armor: def.armor * Math.sqrt(hpMul), path, fly: flyOverride ?? def.tags.includes('flying'), boss,
       dist, x: 0, y: 0, dead: false,
       burnT: 0, burnDps: 0, burnSrc: 0, poisonT: 0, poisonDps: 0, poisonStacks: 0, poisonSrc: 0,
       chillT: 0, chillPct: 0, freezeT: 0, freezeImm: 0, markT: 0, markPct: 0, shredT: 0, shredPct: 0, shieldT: 0, shieldReduce: 0,
@@ -720,6 +724,16 @@ export class Battle {
     if (s.phase === 'wave' && s.qi >= s.queue.length && s.enemies.length === 0) this.waveCleared();
   }
 
+  /**
+   * Castle damage of an enemy that got through. It grows with the world so a well-upgraded
+   * castle can never simply out-last a level without fighting; a boss that gets through takes most of the castle.
+   */
+  leakDamage(def: EnemyDef, boss: boolean): number {
+    if (boss) return Math.ceil(this.s.castleMax * 0.6);
+    const mul = this.s.ctx.mode === 'endless' ? Math.min(2.5, 1 + 0.05 * this.s.wave) : 1 + 0.25 * (this.level.world - 1);
+    return Math.max(1, Math.round(def.leak * mul));
+  }
+
   private updateEnemies(dt: number): void {
     const s = this.s, m = this.mods, list = s.enemies;
     // Auras first (n <= 20, so the quadratic pass is negligible).
@@ -777,7 +791,7 @@ export class Battle {
               // Summons appear on the road next to the summoner (flyers drop them on the ground route).
               const ground = this.map.paths[e.path];
               const dist = e.fly ? Math.min(ground.len - 0.5, (e.dist / this.pathOf(e).len) * ground.len) : e.dist;
-              this.pending.push({ def: a.enemy, path: e.path, dist: Math.max(0, dist - 0.3 - n * 0.3), hpMul: e.boss ? this.level.hpMul * 1.1 : hpMul, fly: false });
+              this.pending.push({ def: a.enemy, path: e.path, dist: Math.max(0, dist - 0.3 - n * 0.3), hpMul: e.boss ? this.level.hpMul * 1.1 : hpMul * 0.6, fly: false });
             }
             this.emit({ t: 'enemyAbility', kind: 'summon', id: e.id, x: e.x, y: e.y });
           } else if (a.type === 'shield') {
@@ -806,8 +820,9 @@ export class Battle {
         e.dead = true;
         this.anyDead = true;
         s.stats.leaks++;
-        s.castleHp = Math.max(0, s.castleHp - def.leak);
-        this.emit({ t: 'leak', dmg: def.leak, id: e.id, boss: e.boss });
+        const dmg = this.leakDamage(def, e.boss);
+        s.castleHp = Math.max(0, s.castleHp - dmg);
+        this.emit({ t: 'leak', dmg, id: e.id, boss: e.boss });
         if (s.castleHp <= 0) {
           s.phase = 'lost';
           s.enemies = s.enemies.filter((x) => !x.dead);

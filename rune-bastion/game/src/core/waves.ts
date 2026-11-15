@@ -9,9 +9,14 @@ export interface SpawnEntry { t: number; e: string; path: number; hpMul: number 
 export const WAVE_HP_STEP = 0.22;
 export const WAVE_BUDGET_STEP = 0.35;
 export const MAX_WAVE_COUNT = 22;
-/** Target length of the spawn window (seconds) – keeps a 3-5 wave level inside 2-4 minutes. */
-export const WAVE_WINDOW = 17;
-export const WAVE_WINDOW_STEP = 2;
+/**
+ * Total seconds of spawning per level, split between its waves: levels with few waves get longer
+ * waves and vice versa, which keeps every level inside the 2-4 minute target.
+ */
+export const LEVEL_SPAWN_TIME = 78;
+export const ENDLESS_WAVE_WINDOW = 18;
+/** Maps with two entrances split the defence, so their waves are a little lighter. */
+export const MULTI_PATH_BUDGET = 0.8;
 
 /**
  * Builds the spawn list of one wave: scripted groups from the level table first,
@@ -22,6 +27,7 @@ export function buildWave(level: LevelDef, w: number, rng: Rng, nPaths: number):
   let budget = level.budget * (1 + WAVE_BUDGET_STEP * Math.min(w, 6));
   const isBossWave = !!level.boss && (level.waves === Infinity || w === level.waves - 1);
   if (isBossWave) budget *= 0.55;
+  if (nPaths > 1) budget *= MULTI_PATH_BUDGET;
   const groups: { e: string; n: number }[] = [];
   let count = 0;
   for (const g of level.scripted[w] ?? []) {
@@ -48,7 +54,7 @@ export function buildWave(level: LevelDef, w: number, rng: Rng, nPaths: number):
   const spare = Math.max(0, budget) / Math.max(1, level.budget);
   const hpAdj = hp * (1 + Math.min(1.5, spare));
   rng.shuffle(groups);
-  const window = WAVE_WINDOW + WAVE_WINDOW_STEP * Math.min(w, 4);
+  const window = Number.isFinite(level.waves) ? LEVEL_SPAWN_TIME / level.waves : ENDLESS_WAVE_WINDOW;
   const step = Math.min(1.6, Math.max(0.45, window / Math.max(1, count + groups.length)));
   const out: SpawnEntry[] = [];
   let t = 0.5;

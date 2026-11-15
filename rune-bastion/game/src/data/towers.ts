@@ -16,7 +16,7 @@ export const SELL_REFUND = 0.6;
 export const TOWERS: Record<string, TowerDef> = {
   archer: {
     id: 'archer', element: 'physical', rarity: 'common', cost: 50, targets: 'all',
-    base: { damage: 10, rate: 1.25, range: 2.6 },
+    base: { damage: 8.5, rate: 1.25, range: 2.6 },
     attack: { kind: 'projectile', speed: 14 },
     effects: [],
     branches: [
@@ -40,7 +40,7 @@ export const TOWERS: Record<string, TowerDef> = {
   },
   fire: {
     id: 'fire', element: 'fire', rarity: 'rare', cost: 70, targets: 'all',
-    base: { damage: 8, rate: 1.0, range: 2.3 },
+    base: { damage: 9.5, rate: 1.0, range: 2.3 },
     attack: { kind: 'projectile', speed: 11 },
     effects: [{ type: 'burn', dpsPct: 0.5, dur: 3 }],
     branches: [
@@ -52,9 +52,9 @@ export const TOWERS: Record<string, TowerDef> = {
   },
   ice: {
     id: 'ice', element: 'ice', rarity: 'rare', cost: 60, targets: 'all',
-    base: { damage: 5, rate: 0.9, range: 2.2 },
-    attack: { kind: 'projectile', speed: 11 },
-    effects: [{ type: 'chill', pct: 0.3, dur: 2.5 }],
+    base: { damage: 5, rate: 0.9, range: 2.5 },
+    attack: { kind: 'projectile', speed: 11, splash: 1.0 },
+    effects: [{ type: 'chill', pct: 0.35, dur: 3.2 }],
     branches: [
       { id: 'glacier', look: 'glacier', mul: { damage: 1.5 }, addEffects: [{ type: 'freeze', chance: 0.18, dur: 1.2 }] },
       { id: 'blizzard', look: 'blizzard', mul: { damage: 0.8, rate: 0.8 }, attack: { kind: 'pulse' } },
@@ -64,9 +64,9 @@ export const TOWERS: Record<string, TowerDef> = {
   },
   poison: {
     id: 'poison', element: 'poison', rarity: 'rare', cost: 65, targets: 'all',
-    base: { damage: 4, rate: 0.8, range: 2.3 },
+    base: { damage: 5, rate: 0.85, range: 2.4 },
     attack: { kind: 'projectile', speed: 10 },
-    effects: [{ type: 'poison', dpsPct: 0.4, dur: 6, maxStacks: 4 }, { type: 'shred', pct: 0.25, dur: 6 }],
+    effects: [{ type: 'poison', dpsPct: 0.55, dur: 6, maxStacks: 4 }, { type: 'shred', pct: 0.25, dur: 6 }],
     branches: [
       { id: 'plague', look: 'plague', mul: { rate: 1.2 }, specials: { spreadOnDeath: 1.5 } },
       { id: 'acid', look: 'acid', mul: { damage: 1.6 }, addEffects: [{ type: 'shred', pct: 0.7, dur: 6 }] },
@@ -76,7 +76,7 @@ export const TOWERS: Record<string, TowerDef> = {
   },
   storm: {
     id: 'storm', element: 'lightning', rarity: 'epic', cost: 85, targets: 'all',
-    base: { damage: 9, rate: 0.8, range: 2.5 },
+    base: { damage: 12, rate: 0.8, range: 2.5 },
     attack: { kind: 'chain', chain: 3, chainFalloff: 0.75 },
     effects: [],
     branches: [
@@ -99,13 +99,13 @@ export const TOWERS: Record<string, TowerDef> = {
     unlockLevel: '2-4',
   },
   sun: {
-    id: 'sun', element: 'light', rarity: 'legendary', cost: 100, targets: 'all',
-    base: { damage: 7, rate: 0.5, range: 1.9 },
-    attack: { kind: 'pulse', buffRate: 0.15 },
+    id: 'sun', element: 'light', rarity: 'legendary', cost: 80, targets: 'all',
+    base: { damage: 12, rate: 0.6, range: 2.6 },
+    attack: { kind: 'pulse', buffRate: 0.3 },
     effects: [],
     specials: { vsUndead: 1.5 },
     branches: [
-      { id: 'dawn', look: 'dawn', mul: { range: 1.15 }, attack: { buffRate: 0.2, buffDmg: 0.15 } },
+      { id: 'dawn', look: 'dawn', mul: { range: 1.15 }, attack: { buffRate: 0.36, buffDmg: 0.15 } },
       { id: 'radiance', look: 'radiance', mul: { damage: 2.6 }, addEffects: [{ type: 'chill', pct: 0.15, dur: 1.5 }] },
     ],
     look: { color: 0xe9b93a, accent: 0xfff6c2, kind: 'sun' },
@@ -115,21 +115,21 @@ export const TOWERS: Record<string, TowerDef> = {
   // ---------------- Hybrids (only obtainable through merge recipes) ----------------
   frostfire: {
     id: 'frostfire', hybrid: true, element: 'fire', element2: 'ice', rarity: 'epic', cost: 0, targets: 'all',
-    base: { damage: 9, rate: 1.05, range: 2.5 },
-    attack: { kind: 'projectile', speed: 12 },
+    base: { damage: 10.5, rate: 1.05, range: 2.5 },
+    attack: { kind: 'projectile', speed: 12, splash: 0.8 },
     effects: [{ type: 'burn', dpsPct: 0.5, dur: 3 }, { type: 'chill', pct: 0.3, dur: 2.5 }],
     look: { color: 0xb04cc0, accent: 0x7de3ff, kind: 'frostfire' },
   },
   steam: {
     id: 'steam', hybrid: true, element: 'fire', element2: 'ice', rarity: 'epic', cost: 0, targets: 'ground',
-    base: { damage: 7, rate: 0.75, range: 1.9 },
+    base: { damage: 9, rate: 0.75, range: 2.0 },
     attack: { kind: 'pulse' },
     effects: [{ type: 'chill', pct: 0.25, dur: 1.5 }, { type: 'burn', dpsPct: 0.3, dur: 2 }],
     look: { color: 0xa7b7c4, accent: 0xff9a5c, kind: 'steam' },
   },
   venom: {
     id: 'venom', hybrid: true, element: 'physical', element2: 'poison', rarity: 'epic', cost: 0, targets: 'all',
-    base: { damage: 15, rate: 0.9, range: 3.1 },
+    base: { damage: 13, rate: 0.9, range: 3.1 },
     attack: { kind: 'projectile', speed: 16 },
     effects: [{ type: 'poison', dpsPct: 0.3, dur: 6, maxStacks: 5 }, { type: 'shred', pct: 0.3, dur: 6 }],
     specials: { critChance: 0.1, critMul: 2 },
@@ -151,22 +151,22 @@ export const TOWERS: Record<string, TowerDef> = {
   },
   stormglacier: {
     id: 'stormglacier', hybrid: true, element: 'lightning', element2: 'ice', rarity: 'legendary', cost: 0, targets: 'all',
-    base: { damage: 9, rate: 0.85, range: 2.5 },
+    base: { damage: 12, rate: 0.85, range: 2.5 },
     attack: { kind: 'chain', chain: 4, chainFalloff: 0.8 },
     effects: [{ type: 'chill', pct: 0.25, dur: 2 }, { type: 'freeze', chance: 0.08, dur: 0.8 }],
     look: { color: 0x4d7fd6, accent: 0xf2fbff, kind: 'stormglacier' },
   },
   plaguefire: {
     id: 'plaguefire', hybrid: true, element: 'poison', element2: 'fire', rarity: 'epic', cost: 0, targets: 'all',
-    base: { damage: 6, rate: 1.0, range: 2.4 },
+    base: { damage: 7.5, rate: 1.0, range: 2.4 },
     attack: { kind: 'projectile', speed: 11, splash: 0.7 },
-    effects: [{ type: 'poison', dpsPct: 0.4, dur: 6, maxStacks: 4 }, { type: 'burn', dpsPct: 0.5, dur: 3 }],
+    effects: [{ type: 'poison', dpsPct: 0.5, dur: 6, maxStacks: 4 }, { type: 'burn', dpsPct: 0.5, dur: 3 }],
     specials: { deathBlast: 1.2 },
     look: { color: 0x7d8f2a, accent: 0xff8a3c, kind: 'plaguefire' },
   },
   runestorm: {
     id: 'runestorm', hybrid: true, element: 'lightning', element2: 'arcane', rarity: 'legendary', cost: 0, targets: 'all',
-    base: { damage: 8.5, rate: 0.95, range: 2.7 },
+    base: { damage: 12.5, rate: 0.95, range: 2.7 },
     attack: { kind: 'chain', chain: 4, chainFalloff: 0.85 },
     effects: [{ type: 'mark', pct: 0.2, dur: 3.5 }],
     look: { color: 0x7b3fe0, accent: 0xfff36b, kind: 'runestorm' },
@@ -174,7 +174,7 @@ export const TOWERS: Record<string, TowerDef> = {
   solarprism: {
     id: 'solarprism', hybrid: true, element: 'light', element2: 'arcane', rarity: 'legendary', cost: 0, targets: 'all',
     base: { damage: 3.4, rate: 4, range: 2.6 },
-    attack: { kind: 'beam', ramp: 0.12, rampMax: 1.6, multi: 2, buffRate: 0.12 },
+    attack: { kind: 'beam', ramp: 0.12, rampMax: 1.6, multi: 2, buffRate: 0.2 },
     effects: [{ type: 'mark', pct: 0.15, dur: 3 }],
     specials: { vsUndead: 1.4 },
     look: { color: 0xf0c34a, accent: 0xff9cf5, kind: 'solarprism' },

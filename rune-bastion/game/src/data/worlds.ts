@@ -10,7 +10,7 @@ export const MAPS: Record<string, MapDef> = {
   B: { id: 'B', rows: ['....S..', '.o..#o.', '.####..', '.#o.o..', '.#####.', '..o.o#.', '.#####.', '.#o.o..', '.###C..', '.......'] },
   C: { id: 'C', rows: ['.S...T.', '.#o.o#.', '.#...#.', '.##o##.', '..#.#..', '.o###o.', '..o#o..', '...#...', '..o#o..', '...C...'] },
   D: { id: 'D', rows: ['S......', '#####o.', '.o..#..', '.o.o#o.', '.####..', '.#o.o..', '.####o.', '..o.#..', '...o#C.', '.......'] },
-  E: { id: 'E', rows: ['......S', '.o.o.o#', '#######', '#.o.o..', '#######', '..o.o.#', '#######', '#o.o...', '###C...', '.......'] },
+  E: { id: 'E', rows: ['......S', '..o.o.#', '.######', '.#o.o..', '.#.o...', '.#####.', '..o.o#.', '....o#.', '....C#o', '.......'] },
   F: { id: 'F', rows: ['S.....T', '#.o.o.#', '##...##', '.#o.o#.', '.##.##.', '..#o#..', '.o###o.', '...#...', '..o#o..', '...C...'] },
 };
 
@@ -38,15 +38,20 @@ const MAP_ORDER: Record<number, [string, boolean][]> = {
   1: [['A', false], ['B', false], ['D', false], ['E', false], ['B', true], ['A', true]],
   2: [['D', true], ['C', false], ['E', true], ['B', false], ['F', false], ['D', false]],
   3: [['E', false], ['F', false], ['A', true], ['C', false], ['B', true], ['E', true]],
-  4: [['C', false], ['D', true], ['F', false], ['E', false], ['A', false], ['C', false]],
+  4: [['C', false], ['D', true], ['F', false], ['E', false], ['A', false], ['B', false]],
 };
 const WAVES = [3, 3, 4, 4, 5, 5];
 /** How many pool entries are available at each level of a world (new enemy types appear gradually). */
 const POOL_SIZE = [2, 3, 4, 5, 6, 7];
 
 export const LEVELS_PER_WORLD = 6;
-/** Balance knobs (tuned with tests/balance.test.ts). */
-export const HP_GROWTH = 1.2;
+/**
+ * Balance knobs (tuned with tests/balance.test.ts).
+ * Coins inside a battle do not grow along the campaign, so enemy health may only grow as fast
+ * as the player's permanent power (cards, research, new towers, abilities) – roughly x7 overall.
+ */
+export const HP_GROWTH = 1.085;
+export const HP_BASE = 1.7;
 export const BASE_BUDGET = 9;
 
 const UNLOCK_TOWER: Record<string, string> = { '1-2': 'ice', '1-4': 'poison', '2-1': 'storm', '2-4': 'arcane', '3-2': 'sun' };
@@ -69,7 +74,7 @@ function buildLevels(): LevelDef[] {
       const isBoss = i === LEVELS_PER_WORLD - 1;
       out.push({
         id, world: w.id, index, map, mirror, waves: WAVES[i],
-        hpMul: Math.pow(HP_GROWTH, index),
+        hpMul: index === 0 ? 1 : HP_BASE * Math.pow(HP_GROWTH, index),
         budget: BASE_BUDGET + 0.5 * index,
         pool, scripted,
         boss: isBoss ? w.boss : undefined,

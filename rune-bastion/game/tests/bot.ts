@@ -18,6 +18,7 @@ export interface BotPolicy {
 export interface BotResult { won: boolean; hp: number; hpPct: number; time: number; wave: number; kills: number; leaks: number; battle: Battle }
 
 const RARITY_SCORE = { common: 1, rare: 2, epic: 3 } as const;
+const SUPPORT_CAP: Record<string, number> = { sun: 1, ice: 2 };
 
 /** Card multiplier / research a typical player has when first reaching a level (see docs/BALANCE). */
 export function expectedContext(levelId: string, seed = 1, over: Partial<RunContext> = {}): RunContext {
@@ -27,7 +28,7 @@ export function expectedContext(levelId: string, seed = 1, over: Partial<RunCont
   const loadout = unlocked.slice(-5).length < 3 ? unlocked : ['archer', 'cannon', ...unlocked.filter((t) => t !== 'archer' && t !== 'cannon').slice(-3)];
   const cardLevel = 1 + Math.floor(idx / 2.5);
   const cardMul: Record<string, number> = {};
-  for (const t of unlocked) cardMul[t] = 1 + 0.08 * (cardLevel - 1);
+  for (const t of unlocked) cardMul[t] = 1 + 0.1 * (cardLevel - 1);
   const abilities = ['meteor'];
   if (idx > 2) abilities.push('freeze');
   if (idx > 5) abilities.push('overcharge');
@@ -89,7 +90,16 @@ export function runBot(ctx: RunContext, policy: BotPolicy = {}, maxTime = 900): 
         bought = false;
         const free = coverage.find((i) => !b.towerAt(i));
         if (free === undefined) break;
-        const def = allowed[buyIdx % allowed.length];
+        // Support towers come after damage dealers and in small numbers, like a sensible player would do it.
+        let def = allowed[buyIdx % allowed.length];
+        const dealers = s.towers.filter((t) => SUPPORT_CAP[t.def] === undefined).reduce((a, t) => a + 2 ** (t.tier - 1), 0);
+        for (let k = 0; k < allowed.length && allowed.some((d) => SUPPORT_CAP[d] === undefined); k++) {
+          const cap = SUPPORT_CAP[def];
+          const have = s.towers.filter((t) => t.def === def).length;
+          if (cap === undefined || (have < cap && dealers >= 3 * (have + 1))) break;
+          buyIdx++;
+          def = allowed[buyIdx % allowed.length];
+        }
         if (s.coins >= b.buyCost(def) && b.buyTower(def, free).ok) { buyIdx++; bought = true; }
       }
       // 3. upgrades when the board is full

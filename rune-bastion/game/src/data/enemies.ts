@@ -10,10 +10,10 @@ type Arch = Pick<EnemyDef, 'hp' | 'speed' | 'armor' | 'bounty' | 'leak' | 'threa
 const ARCH: Record<string, Arch> = {
   grunt: { tags: ['ground'], hp: 30, speed: 0.95, armor: 0, bounty: 5, leak: 1, threat: 1 },
   fast: { tags: ['ground', 'fast'], hp: 18, speed: 1.75, armor: 0, bounty: 5, leak: 1, threat: 1 },
-  armored: { tags: ['ground', 'armored'], hp: 85, speed: 0.6, armor: 4, bounty: 13, leak: 2, threat: 3 },
+  armored: { tags: ['ground', 'armored'], hp: 85, speed: 0.68, armor: 4, bounty: 13, leak: 2, threat: 3 },
   flying: { tags: ['flying'], hp: 24, speed: 1.15, armor: 0, bounty: 7, leak: 1, threat: 1.5 },
-  magic: { tags: ['ground', 'magic'], hp: 48, speed: 0.8, armor: 0, bounty: 11, leak: 1, threat: 2.5 },
-  elite: { tags: ['ground', 'elite'], hp: 170, speed: 0.75, armor: 1, bounty: 22, leak: 3, threat: 5 },
+  magic: { tags: ['ground', 'magic'], hp: 48, speed: 0.8, armor: 0, bounty: 11, leak: 2, threat: 2.5 },
+  elite: { tags: ['ground', 'elite'], hp: 170, speed: 0.8, armor: 1, bounty: 22, leak: 3, threat: 5 },
   special: { tags: ['ground', 'special'], hp: 55, speed: 0.85, armor: 0, bounty: 9, leak: 1, threat: 2.5 },
 };
 
@@ -78,7 +78,7 @@ const list: EnemyDef[] = [
   mk('wraith', 4, 'flying', { shape: 'ghost', color: 0x6a4fa3, accent: 0xc9a6ff, size: 0.36 },
     { tags: ['undead', 'magic'], resist: { physical: 0.6, poison: 0.5, light: 1.4, arcane: 1.2 } }),
   mk('necromancer', 4, 'magic', { shape: 'biped', color: 0x3d2f5a, accent: 0x7dff9a, size: 0.38, extras: ['staff', 'hood'] },
-    { abilities: [{ type: 'summon', every: 7, count: 2, enemy: 'skeleton' }], threat: 3.5 }),
+    { abilities: [{ type: 'summon', every: 8, count: 1, enemy: 'skeleton' }], threat: 3.5 }),
   mk('abomination', 4, 'elite', { shape: 'golem', color: 0x6f8f5a, accent: 0x8f3f4a, size: 0.56 },
     { tags: ['undead'], resist: { poison: 0.5 }, abilities: [{ type: 'regen', pctPerSec: 0.015 }] }),
   mk('shade', 4, 'special', { shape: 'ghost', color: 0x2f2a3d, accent: 0xff5c7a, size: 0.32 },
@@ -98,13 +98,13 @@ const list: EnemyDef[] = [
     look: { shape: 'golem', color: 0x8fc6ea, accent: 0xffffff, size: 0.95, extras: ['crown', 'horns'] },
   },
   {
-    id: 'boss_ignarok', world: 3, tags: ['flying', 'boss'], hp: 2300, speed: 0.36, armor: 2, resist: { fire: 0.4, ice: 1.3, lightning: 1.15 },
+    id: 'boss_ignarok', world: 3, tags: ['flying', 'boss'], hp: 2000, speed: 0.36, armor: 2, resist: { fire: 0.4, ice: 1.3, lightning: 1.15 },
     bounty: 200, leak: 15, threat: 28,
     abilities: [{ type: 'enrage', below: 0.4, speedMul: 1.7 }, { type: 'stun_towers', every: 8, count: 3, dur: 2.5 }, { type: 'summon', every: 12, count: 2, enemy: 'drake' }],
     look: { shape: 'dragon', color: 0xb8321a, accent: 0xffc23e, size: 0.95, extras: ['horns'] },
   },
   {
-    id: 'boss_morvane', world: 4, tags: ['ground', 'boss', 'undead', 'magic'], hp: 2700, speed: 0.38, armor: 2,
+    id: 'boss_morvane', world: 4, tags: ['ground', 'boss', 'undead', 'magic'], hp: 2300, speed: 0.38, armor: 2,
     resist: { poison: 0.5, fire: 0.8, ice: 0.8, lightning: 0.8, light: 1.35, physical: 1.1 },
     bounty: 260, leak: 15, threat: 32,
     abilities: [{ type: 'summon', every: 7, count: 3, enemy: 'skeleton' }, { type: 'heal_aura', radius: 2.4, pctPerSec: 0.03 }, { type: 'shield', every: 14, dur: 3, reduce: 0.9 }, { type: 'blink', every: 16, dist: 1.2 }],

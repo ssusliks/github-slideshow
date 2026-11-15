@@ -13,7 +13,7 @@ export interface Reward {
 
 // ---------------------------------------------------------------- tower cards
 export const CARD_MAX_LEVEL = 10;
-export const CARD_BONUS = 0.08;
+export const CARD_BONUS = 0.1;
 /** shards needed to go from level L to L+1 (index = L). */
 export const CARD_SHARDS = [0, 5, 10, 18, 30, 45, 65, 90, 120, 160];
 export const cardGold = (level: number) => Math.round(70 * Math.pow(level, 1.7));
