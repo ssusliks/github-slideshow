@@ -1,0 +1,507 @@
+{
+  "at": "2026-11-15T17:48:16.821Z",
+  "passed": 125,
+  "total": 125,
+  "results": [
+    {
+      "ok": true,
+      "msg": "main menu offers level 1-1"
+    },
+    {
+      "ok": true,
+      "msg": "tutorial bubble is shown"
+    },
+    {
+      "ok": true,
+      "msg": "tutorial pointer animates towards a slot"
+    },
+    {
+      "ok": true,
+      "msg": "battle waits for the player during the tutorial"
+    },
+    {
+      "ok": true,
+      "msg": "two archers placed by drag & drop"
+    },
+    {
+      "ok": true,
+      "msg": "coins were charged (left 45)"
+    },
+    {
+      "ok": true,
+      "msg": "cannot place on an occupied slot or outside the board"
+    },
+    {
+      "ok": true,
+      "msg": "wave starts from the Start button"
+    },
+    {
+      "ok": true,
+      "msg": "enemies walk the road"
+    },
+    {
+      "ok": true,
+      "msg": "meteor ability used by tap-to-target"
+    },
+    {
+      "ok": true,
+      "msg": "ability shows its cooldown"
+    },
+    {
+      "ok": true,
+      "msg": "three boosts offered after the wave"
+    },
+    {
+      "ok": true,
+      "msg": "towers killed enemies automatically (9 kills)"
+    },
+    {
+      "ok": true,
+      "msg": "battle is paused while choosing"
+    },
+    {
+      "ok": true,
+      "msg": "boost picked"
+    },
+    {
+      "ok": true,
+      "msg": "merge preview shows the result"
+    },
+    {
+      "ok": true,
+      "msg": "preview lists the new stats"
+    },
+    {
+      "ok": true,
+      "msg": "cancelling the merge changes nothing"
+    },
+    {
+      "ok": true,
+      "msg": "merge confirmed: one tier II tower on the target slot"
+    },
+    {
+      "ok": true,
+      "msg": "merge fee charged once"
+    },
+    {
+      "ok": true,
+      "msg": "tower panel opens for the merged tower"
+    },
+    {
+      "ok": true,
+      "msg": "tower upgraded from the panel"
+    },
+    {
+      "ok": true,
+      "msg": "game speed toggles to x2"
+    },
+    {
+      "ok": true,
+      "msg": "pause stops the battle"
+    },
+    {
+      "ok": true,
+      "msg": "level 1-1 won"
+    },
+    {
+      "ok": true,
+      "msg": "result recorded with 3 star(s)"
+    },
+    {
+      "ok": true,
+      "msg": "rewards granted (gold 100 -> 290, gems 20 -> 30)"
+    },
+    {
+      "ok": true,
+      "msg": "tutorial marked as completed"
+    },
+    {
+      "ok": true,
+      "msg": "reward cannot be claimed before the ad ends"
+    },
+    {
+      "ok": true,
+      "msg": "watching the ad doubled the gold (290 -> 480)"
+    },
+    {
+      "ok": true,
+      "msg": "double reward can only be used once"
+    },
+    {
+      "ok": true,
+      "msg": "next level starts with a blessing choice (no tutorial)"
+    },
+    {
+      "ok": true,
+      "msg": "leaving a battle gives no rewards"
+    },
+    {
+      "ok": true,
+      "msg": "map shows 1 cleared, 1 open and 4 locked levels"
+    },
+    {
+      "ok": true,
+      "msg": "progress survives an app restart"
+    },
+    {
+      "ok": true,
+      "msg": "menu continues from level 1-2"
+    },
+    {
+      "ok": true,
+      "msg": "no runtime errors (0)"
+    },
+    {
+      "ok": true,
+      "msg": "incompatible towers do not merge (archer + cannon)"
+    },
+    {
+      "ok": true,
+      "msg": "the player is told why"
+    },
+    {
+      "ok": true,
+      "msg": "hybrid needs tier II towers"
+    },
+    {
+      "ok": true,
+      "msg": "merge mode shows a hint and highlights partners"
+    },
+    {
+      "ok": true,
+      "msg": "fire + ice offers two hybrid results"
+    },
+    {
+      "ok": true,
+      "msg": "the player is asked to choose"
+    },
+    {
+      "ok": true,
+      "msg": "second option can be selected"
+    },
+    {
+      "ok": true,
+      "msg": "chosen hybrid (Steam Geyser, tier III) created"
+    },
+    {
+      "ok": true,
+      "msg": "both source towers were consumed"
+    },
+    {
+      "ok": true,
+      "msg": "tier III offers two evolution branches"
+    },
+    {
+      "ok": true,
+      "msg": "archer evolved into the Marksman"
+    },
+    {
+      "ok": true,
+      "msg": "hybrid + evolved tower is refused"
+    },
+    {
+      "ok": true,
+      "msg": "towers can be moved to a free slot"
+    },
+    {
+      "ok": true,
+      "msg": "dragging the ground pans the camera"
+    },
+    {
+      "ok": true,
+      "msg": "camera zoom is clamped and applied"
+    },
+    {
+      "ok": true,
+      "msg": "no runtime errors (0)"
+    },
+    {
+      "ok": true,
+      "msg": "castle falls when nothing defends it"
+    },
+    {
+      "ok": true,
+      "msg": "continue is offered for an ad or gems (never for money)"
+    },
+    {
+      "ok": true,
+      "msg": "second chance restores the castle and the battle goes on"
+    },
+    {
+      "ok": true,
+      "msg": "gems were spent for the continue"
+    },
+    {
+      "ok": true,
+      "msg": "only one continue per battle"
+    },
+    {
+      "ok": true,
+      "msg": "a lost battle does not count as a clear"
+    },
+    {
+      "ok": true,
+      "msg": "boss wave is announced"
+    },
+    {
+      "ok": true,
+      "msg": "boss is on the field with his escort"
+    },
+    {
+      "ok": true,
+      "msg": "boss level can be won"
+    },
+    {
+      "ok": true,
+      "msg": "victory unlocks a new world and endless mode"
+    },
+    {
+      "ok": true,
+      "msg": "boss dropped essence (20)"
+    },
+    {
+      "ok": true,
+      "msg": "endless mode keeps sending waves (wave 4)"
+    },
+    {
+      "ok": true,
+      "msg": "endless run ends with a result screen"
+    },
+    {
+      "ok": true,
+      "msg": "endless run pays gold"
+    },
+    {
+      "ok": true,
+      "msg": "no runtime errors (0)"
+    },
+    {
+      "ok": true,
+      "msg": "going to background stores a resumable snapshot"
+    },
+    {
+      "ok": true,
+      "msg": "the battle does not run in the background"
+    },
+    {
+      "ok": true,
+      "msg": "back in foreground the journal is \"dirty\" again"
+    },
+    {
+      "ok": true,
+      "msg": "battle restored exactly where it was left"
+    },
+    {
+      "ok": true,
+      "msg": "the resumed battle can be finished and rewarded"
+    },
+    {
+      "ok": true,
+      "msg": "a crash gives no rewards and keeps earlier progress"
+    },
+    {
+      "ok": true,
+      "msg": "after a crash the level starts again from the beginning"
+    },
+    {
+      "ok": true,
+      "msg": "a battle error stops the battle safely with a dialog"
+    },
+    {
+      "ok": true,
+      "msg": "no rewards after an aborted battle"
+    },
+    {
+      "ok": true,
+      "msg": "a corrupted save is restored from a backup"
+    },
+    {
+      "ok": true,
+      "msg": "all screens render in \"en\" without missing texts or overflow"
+    },
+    {
+      "ok": true,
+      "msg": "all screens render in \"ru\" without missing texts or overflow"
+    },
+    {
+      "ok": true,
+      "msg": "all screens render in \"kk\" without missing texts or overflow"
+    },
+    {
+      "ok": true,
+      "msg": "language choice persists"
+    },
+    {
+      "ok": true,
+      "msg": "tower card upgraded for shards and gold"
+    },
+    {
+      "ok": true,
+      "msg": "hybrid recipe book opens"
+    },
+    {
+      "ok": true,
+      "msg": "research purchased"
+    },
+    {
+      "ok": true,
+      "msg": "locked research explains its requirement"
+    },
+    {
+      "ok": true,
+      "msg": "daily login reward claimed"
+    },
+    {
+      "ok": true,
+      "msg": "login reward cannot be claimed twice"
+    },
+    {
+      "ok": true,
+      "msg": "three daily quests are listed"
+    },
+    {
+      "ok": true,
+      "msg": "achievements are listed"
+    },
+    {
+      "ok": true,
+      "msg": "free gold for ads granted (4960 -> 5242)"
+    },
+    {
+      "ok": true,
+      "msg": "ad reward respects its daily cap (3/day)"
+    },
+    {
+      "ok": true,
+      "msg": "closing an ad early gives no reward"
+    },
+    {
+      "ok": true,
+      "msg": "cancelled purchase changes nothing"
+    },
+    {
+      "ok": true,
+      "msg": "sandbox purchase delivered 80 gems"
+    },
+    {
+      "ok": true,
+      "msg": "Premium purchased once; castle skin unlocked"
+    },
+    {
+      "ok": true,
+      "msg": "Premium cannot be bought twice"
+    },
+    {
+      "ok": true,
+      "msg": "castle skin equipped"
+    },
+    {
+      "ok": true,
+      "msg": "gem shop item bought"
+    },
+    {
+      "ok": true,
+      "msg": "settings change and apply (fps, quality, vibration, volume)"
+    },
+    {
+      "ok": true,
+      "msg": "frame limiter follows the fps setting"
+    },
+    {
+      "ok": true,
+      "msg": "local backups are listed"
+    },
+    {
+      "ok": true,
+      "msg": "no runtime errors (0)"
+    },
+    {
+      "ok": true,
+      "msg": "device A: guest progress uploaded to the cloud"
+    },
+    {
+      "ok": true,
+      "msg": "device A plays as a guest without registering"
+    },
+    {
+      "ok": true,
+      "msg": "device A: guest upgraded to an account (progress kept)"
+    },
+    {
+      "ok": true,
+      "msg": "device B: wrong password is rejected"
+    },
+    {
+      "ok": true,
+      "msg": "device B: signing in brings the progress from device A"
+    },
+    {
+      "ok": true,
+      "msg": "device B: new progress uploaded"
+    },
+    {
+      "ok": true,
+      "msg": "device A: downloads the newer progress"
+    },
+    {
+      "ok": true,
+      "msg": "both devices now show the same progress"
+    },
+    {
+      "ok": true,
+      "msg": "conflict: the profile that is further ahead wins as a whole (no currency mixing)"
+    },
+    {
+      "ok": true,
+      "msg": "the losing version is kept as a restorable backup"
+    },
+    {
+      "ok": true,
+      "msg": "sync reports \"offline\" without network"
+    },
+    {
+      "ok": true,
+      "msg": "campaign battles start with no network"
+    },
+    {
+      "ok": true,
+      "msg": "deleted cloud account can no longer sign in"
+    },
+    {
+      "ok": true,
+      "msg": "local progress is kept after deleting the cloud account"
+    },
+    {
+      "ok": true,
+      "msg": "default cap is 30 fps (measured 29.7)"
+    },
+    {
+      "ok": true,
+      "msg": "stress scene reached the on-screen limit without exceeding it (peak 20, limit 20)"
+    },
+    {
+      "ok": true,
+      "msg": "draw calls in the worst case stay within budget (455 with 20 enemies and a full board)"
+    },
+    {
+      "ok": true,
+      "msg": "triangle count stays within the mobile budget (16870)"
+    },
+    {
+      "ok": true,
+      "msg": "almost no textures in memory (0)"
+    },
+    {
+      "ok": true,
+      "msg": "objects are pooled: geometry count is stable during the fight (60 -> 60)"
+    },
+    {
+      "ok": true,
+      "msg": "60 fps option never exceeds 60 (measured 41.7)"
+    },
+    {
+      "ok": true,
+      "msg": "no runtime errors (0)"
+    }
+  ]
+}

@@ -50,6 +50,10 @@ export class BattleView {
   private enemyPool = new Map<string, EnemyView[]>();
   private projs = new Map<number, ProjView>();
   private projPool = new Map<string, THREE.Mesh[]>();
+  private ringGeos = new Map<string, THREE.BufferGeometry>();
+  /** Shared geometries of pooled effects (lightning segments, shock rings). */
+  private segGeo = new THREE.BoxGeometry(1, 1, 1);
+  private ringGeo = new THREE.RingGeometry(0.86, 1, 40).rotateX(-Math.PI / 2);
   private segs: Seg[] = [];
   private rings: Ring[] = [];
   private slotRings: THREE.Mesh[] = [];
@@ -392,8 +396,9 @@ export class BattleView {
     const model = buildEnemy(d);
     const boss = d.tags.includes('boss');
     const ringMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.25, depthWrite: false });
-    const rg = new THREE.CircleGeometry(d.look.size * 1.25, 16);
-    rg.rotateX(-Math.PI / 2);
+    // One shadow/status disc geometry per enemy type, shared by every pooled instance.
+    let rg = this.ringGeos.get(def);
+    if (!rg) { rg = new THREE.CircleGeometry(d.look.size * 1.25, 16); rg.rotateX(-Math.PI / 2); this.ringGeos.set(def, rg); }
     const ring = new THREE.Mesh(rg, ringMat);
     const bw = boss ? 1.1 : 0.5;
     const hpBg = new THREE.Sprite(new THREE.SpriteMaterial({ color: 0x1b1e26, depthTest: false }));
@@ -431,7 +436,7 @@ export class BattleView {
     let s = this.segs.find((x) => x.life <= 0);
     if (!s) {
       if (this.segs.length >= 70) return;
-      const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.95, depthWrite: false }));
+      const mesh = new THREE.Mesh(this.segGeo, new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.95, depthWrite: false }));
       mesh.renderOrder = 8;
       this.dyn.add(mesh);
       s = { mesh, life: 0, max: 1, w };
@@ -461,10 +466,8 @@ export class BattleView {
     let r = this.rings.find((q) => q.life <= 0);
     if (!r) {
       if (this.rings.length >= 14) return;
-      const g = new THREE.RingGeometry(0.86, 1, 40);
-      g.rotateX(-Math.PI / 2);
       const m = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.8, depthWrite: false, depthTest: false });
-      const mesh = new THREE.Mesh(g, m);
+      const mesh = new THREE.Mesh(this.ringGeo, m);
       mesh.renderOrder = 6;
       this.dyn.add(mesh);
       r = { mesh, mat: m, life: 0, max: 1, r0, r1 };

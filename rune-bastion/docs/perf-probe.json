@@ -1,0 +1,14 @@
+{
+  "fps": 29.740334391322474,
+  "cpuMsPerFrame": 2.933613445373064,
+  "calls": 455,
+  "triangles": 16870,
+  "geometries": 60,
+  "textures": 0,
+  "maxEnemies": 20,
+  "particles": 100,
+  "heapMB": 26,
+  "cap": 30,
+  "fpsAt60Setting": 41.666666666666664,
+  "note": "headless Chromium with software WebGL (SwiftShader) – not representative of phone GPUs"
+}

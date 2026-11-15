@@ -28,6 +28,9 @@ export class BattleScreen {
   readonly b: Battle;
   private paused = false;
   private adPause = false;
+  /** app is in the background: the clock must not advance even if frames keep coming. */
+  private suspended = false;
+  private defeatOpen = false;
   private modalPause = 0;
   private ended = false;
   private errored = false;
@@ -472,14 +475,16 @@ export class BattleScreen {
   /** App is going to the background: stop the clock and store a resumable snapshot. */
   suspend(): void {
     if (this.ended || this.errored) return;
+    this.suspended = true;
     this.cancelDrag();
     this.app.writeJournal({ run: this.run, clean: true, snapshot: this.b.serialize() });
   }
   resumeFromBackground(): void {
     if (this.ended || this.errored) return;
     // Back in the foreground: from now on a sudden death of the process is a crash again.
+    this.suspended = false;
     this.app.writeJournal({ run: this.run, clean: false, snapshot: null });
-    this.togglePause(true);
+    if (!this.defeatOpen && !this.boostOpen && this.modalPause === 0) this.togglePause(true);
   }
   /** A runtime error inside the battle: stop safely, grant nothing, offer a clean restart. */
   onRuntimeError(): void {
@@ -509,7 +514,7 @@ export class BattleScreen {
   // ------------------------------------------------------------------ frame
   frame(dt: number): void {
     const b = this.b, s = b.s;
-    const running = !this.paused && !this.adPause && this.modalPause === 0 && !this.ended && !this.errored;
+    const running = !this.paused && !this.adPause && !this.suspended && this.modalPause === 0 && !this.ended && !this.errored;
     if (running) b.advance(dt * this.app.settings.speed);
     if (b.events.length) for (const ev of b.events) this.onEvent(ev);
     this.view.frame(dt);
@@ -682,11 +687,13 @@ export class BattleScreen {
     this.tut(null); this.hand(null);
     if (s.phase === 'lost' && !s.revived) {
       // Defeat: optional second chance (ad or gems), otherwise the run is settled.
+      if (this.defeatOpen) return;
+      this.defeatOpen = true;
       this.modalPause++;
       app.audio.play('lose');
       let decided = false;
-      const settle = () => { if (decided) return; decided = true; close(); this.modalPause--; this.settle(); };
-      const revive = () => { if (decided) return; decided = true; close(); this.modalPause--; b.revive(); };
+      const settle = () => { if (decided) return; decided = true; close(); this.modalPause--; this.defeatOpen = false; this.settle(); };
+      const revive = () => { if (decided) return; decided = true; close(); this.modalPause--; this.defeatOpen = false; b.revive(); };
       const close = app.modal(h('div.dialog.center', null,
         h('div.big-icon', null, '💔'), h('h2', null, t('lose.title')), h('p', null, t('lose.continue_text')),
         app.game.adsLeft('revive') > 0 ? btn([h('span', null, t('lose.continue')), h('small', null, '🎬 ', t('ui.free'))], async () => { const r = await app.rewarded('revive'); if (r.ok) revive(); }, 'primary wide', { id: 'btn-revive-ad' }) : null,
