@@ -1,0 +1,12 @@
+{
+  "name": "rune-bastion-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Account, cloud-save, purchase verification and support backend for Rune Bastion (zero dependencies).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/main.mjs",
+    "test": "node --test test/server.test.mjs"
+  }
+}

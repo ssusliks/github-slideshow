@@ -14,10 +14,13 @@
     "cap:sync": "cap sync"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.3.0",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.6.2",
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/preferences": "^8.0.1",
+    "@capgo/capacitor-social-login": "^8.7.11",
+    "@capgo/native-purchases": "^8.9.16",
     "three": "^0.187.0"
   },
   "devDependencies": {

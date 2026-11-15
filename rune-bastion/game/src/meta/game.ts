@@ -197,7 +197,7 @@ export class Game {
     if (!entry || !q) return fail('err.unknown');
     if (q.claimed) return fail('err.claimed');
     if (!entry.done) return fail('err.not_done');
-    const grantId = `quest:${kind}:${kind === 'daily' ? st.day : (st as Profile['weekly']).week}:${id}`;
+    const grantId = `quest:${kind}:${kind === 'daily' ? this.p.daily.day : this.p.weekly.week}:${id}`;
     const reward = this.resolveReward(entry.def.reward, grantId);
     q.claimed = true;
     if (!this.grant(entry.def.reward, grantId)) this.changed();

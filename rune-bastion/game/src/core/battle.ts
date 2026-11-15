@@ -377,13 +377,16 @@ export class Battle {
     const free = Math.round(this.mods.rerolls);
     return this.s.rerolled < free ? 0 : REROLL_COST + 20 * (this.s.rerolled - free);
   }
-  rerollBoosts(): ActionResult {
+  /** `free` = paid for by a rewarded ad instead of coins. */
+  rerollBoosts(free = false): ActionResult {
     const s = this.s;
     if (s.phase !== 'boost') return fail('act.err.phase');
-    const cost = this.rerollCost();
-    if (s.coins < cost) return fail('act.err.coins');
-    s.coins -= cost;
-    s.rerolled++;
+    if (!free) {
+      const cost = this.rerollCost();
+      if (s.coins < cost) return fail('act.err.coins');
+      s.coins -= cost;
+      s.rerolled++;
+    }
     s.offer = this.rollBoosts(s.offer ?? []);
     return OK;
   }
