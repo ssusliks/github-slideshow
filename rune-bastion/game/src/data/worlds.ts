@@ -51,7 +51,7 @@ export const LEVELS_PER_WORLD = 6;
  * as the player's permanent power (cards, research, new towers, abilities) – roughly x7 overall.
  */
 export const HP_GROWTH = 1.085;
-export const HP_BASE = 1.7;
+export const HP_BASE = 2.2;
 export const BASE_BUDGET = 9;
 
 const UNLOCK_TOWER: Record<string, string> = { '1-2': 'ice', '1-4': 'poison', '2-1': 'storm', '2-4': 'arcane', '3-2': 'sun' };

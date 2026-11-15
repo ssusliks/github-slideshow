@@ -63,10 +63,10 @@ export const TOWERS: Record<string, TowerDef> = {
     unlockLevel: '1-2',
   },
   poison: {
-    id: 'poison', element: 'poison', rarity: 'rare', cost: 65, targets: 'all',
+    id: 'poison', element: 'poison', rarity: 'rare', cost: 60, targets: 'all',
     base: { damage: 5, rate: 0.85, range: 2.4 },
     attack: { kind: 'projectile', speed: 10 },
-    effects: [{ type: 'poison', dpsPct: 0.55, dur: 6, maxStacks: 4 }, { type: 'shred', pct: 0.25, dur: 6 }],
+    effects: [{ type: 'poison', dpsPct: 0.6, dur: 6, maxStacks: 5 }, { type: 'shred', pct: 0.25, dur: 6 }],
     branches: [
       { id: 'plague', look: 'plague', mul: { rate: 1.2 }, specials: { spreadOnDeath: 1.5 } },
       { id: 'acid', look: 'acid', mul: { damage: 1.6 }, addEffects: [{ type: 'shred', pct: 0.7, dur: 6 }] },
@@ -75,9 +75,9 @@ export const TOWERS: Record<string, TowerDef> = {
     unlockLevel: '1-4',
   },
   storm: {
-    id: 'storm', element: 'lightning', rarity: 'epic', cost: 85, targets: 'all',
-    base: { damage: 12, rate: 0.8, range: 2.5 },
-    attack: { kind: 'chain', chain: 3, chainFalloff: 0.75 },
+    id: 'storm', element: 'lightning', rarity: 'epic', cost: 75, targets: 'all',
+    base: { damage: 13, rate: 0.9, range: 2.5 },
+    attack: { kind: 'chain', chain: 3, chainFalloff: 0.8 },
     effects: [],
     branches: [
       { id: 'tempest', look: 'tempest', mul: { rate: 1.1 }, attack: { chain: 6, chainFalloff: 0.85 } },
@@ -101,11 +101,11 @@ export const TOWERS: Record<string, TowerDef> = {
   sun: {
     id: 'sun', element: 'light', rarity: 'legendary', cost: 80, targets: 'all',
     base: { damage: 12, rate: 0.6, range: 2.6 },
-    attack: { kind: 'pulse', buffRate: 0.3 },
+    attack: { kind: 'pulse', buffRate: 0.35, buffDmg: 0.1 },
     effects: [],
     specials: { vsUndead: 1.5 },
     branches: [
-      { id: 'dawn', look: 'dawn', mul: { range: 1.15 }, attack: { buffRate: 0.36, buffDmg: 0.15 } },
+      { id: 'dawn', look: 'dawn', mul: { range: 1.15 }, attack: { buffRate: 0.42, buffDmg: 0.22 } },
       { id: 'radiance', look: 'radiance', mul: { damage: 2.6 }, addEffects: [{ type: 'chill', pct: 0.15, dur: 1.5 }] },
     ],
     look: { color: 0xe9b93a, accent: 0xfff6c2, kind: 'sun' },

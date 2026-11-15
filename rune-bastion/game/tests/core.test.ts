@@ -351,6 +351,24 @@ describe('combat', () => {
     expect(combo.reactions).toBeGreaterThan(0);
     expect(combo.dealt).toBeGreaterThan(solo.dealt * 1.15);
   });
+  it('aura towers speed up their neighbours', () => {
+    const run = (withSun: boolean) => {
+      const b = new Battle(ctx({ loadout: ['archer', 'sun'] }));
+      b.buyTower('archer', 0);
+      const a = b.s.towers[0];
+      if (withSun) {
+        const p = b.slotPos(0);
+        const near = b.map.slots.map((s, i) => ({ i, d: Math.hypot(s.x - p.x, s.y - p.y) })).filter((x) => x.i !== 0).sort((x, y) => x.d - y.d)[0];
+        b.buyTower('sun', near.i);
+        expect(b.auraOf(a.id).rate).toBeGreaterThan(0);
+      }
+      b.startWave(); b.s.queue = [];
+      const e = (b as any).spawnEnemy('ogre', 0, 0, 1); e.hp = e.maxHp = 1e7; e.armor = 0;
+      for (let i = 0; i < 30 * 40; i++) b.step();
+      return a.dealt;
+    };
+    expect(run(true)).toBeGreaterThan(run(false) * 1.2);
+  });
   it('armor punishes weak hits, siege and shred counter it', () => {
     const arrow = duel('archer', 'ogre', 1, 3).dealt / computeTower('archer', 1, 0, null, 1, emptyMods()).dps;
     const shell = duel('cannon', 'ogre', 1, 3).dealt / computeTower('cannon', 1, 0, null, 1, emptyMods()).dps;

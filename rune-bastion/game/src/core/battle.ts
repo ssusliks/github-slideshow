@@ -15,6 +15,9 @@ export const START_COINS = 150;
 export const BASE_CASTLE_HP = 20;
 export const PREP_TIME = 10;
 export const BREATHER = 2.5;
+/** In-battle income knobs: generous enough that every level sees several merges. */
+export const BOUNTY_MUL = 1.4;
+export const BUY_ESCALATION = 1.1;
 
 export interface TowerState {
   id: number; def: string; slot: number; tier: number; rank: number; branch: string | null;
@@ -176,7 +179,7 @@ export class Battle {
     const d = TOWERS[def];
     if (this.s.freeTowers > 0) return 0;
     const n = this.s.bought[def] ?? 0;
-    return Math.max(1, Math.round(d.cost * Math.max(0.3, 1 + this.mods.towerCost) * Math.pow(1.12, n)));
+    return Math.max(1, Math.round(d.cost * Math.max(0.3, 1 + this.mods.towerCost) * Math.pow(BUY_ESCALATION, n)));
   }
   upgradeCost(t: TowerState): number {
     const base = TOWERS[t.def].cost || 80;
@@ -523,7 +526,7 @@ export class Battle {
 
   private waveCleared(): void {
     const s = this.s;
-    const bonus = 25 + 10 * Math.min(s.wave, 20);
+    const bonus = 40 + 15 * Math.min(s.wave, 20);
     this.addCoins(bonus);
     if (this.mods.interest > 0) this.addCoins(Math.min(100, Math.floor(s.coins * this.mods.interest)), false);
     if (this.mods.waveHeal > 0) s.castleHp = Math.min(s.castleMax, s.castleHp + Math.round(this.mods.waveHeal));
@@ -646,7 +649,7 @@ export class Battle {
     this.anyDead = true;
     s.stats.kills++;
     if (e.boss) s.stats.bosses++;
-    const coins = def.bounty + this.mods.bountyFlat;
+    const coins = Math.round(def.bounty * BOUNTY_MUL) + this.mods.bountyFlat;
     this.addCoins(coins);
     this.emit({ t: 'kill', id: e.id, def: e.def, x: e.x, y: e.y, boss: e.boss, coins });
     for (const a of def.abilities ?? []) {

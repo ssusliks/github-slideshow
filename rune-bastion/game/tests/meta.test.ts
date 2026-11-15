@@ -23,7 +23,7 @@ function playLevel(g: Game, levelId: string, runId: string, expectWin = true) {
   const r = g.beginRun(levelId, 'campaign', runId);
   expect(r.ok).toBe(true);
   if (!r.ok) throw new Error('beginRun failed');
-  const res = runBot({ ...r.ctx, tutorial: false, baseMods: { ...r.ctx.baseMods, dmgAll: (r.ctx.baseMods.dmgAll ?? 0) + (expectWin ? 3 : -0.95) } }, { hybrids: true });
+  const res = runBot({ ...r.ctx, tutorial: false, baseMods: { ...r.ctx.baseMods, ...(expectWin ? { dmgAll: (r.ctx.baseMods.dmgAll ?? 0) + 3 } : { enemyHp: 200 }) } }, { hybrids: true });
   expect(res.won).toBe(expectWin);
   const state = res.battle.serialize();
   state.ctx = r.ctx; // the bot only tweaked difficulty; identity fields are unchanged

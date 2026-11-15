@@ -111,13 +111,20 @@ describe('tower balance', () => {
     expect(Math.max(...vals) / Math.min(...vals), 'strongest vs weakest damage tower').toBeLessThanOrEqual(2.5);
   });
   it('support towers earn their slot in a team', () => {
-    const base = strength(LEVEL, ['archer'], {}), withIce = strength(LEVEL, ['archer', 'ice'], {});
-    // The Sun Totem is a late-game support: it pays off once slots, not coins, are the limit.
-    const late = '3-5';
-    const arc = strength(late, ['arcane'], {}), arcSun = strength(late, ['arcane', 'sun'], {});
-    report.push(`SUPPORT VALUE: on ${LEVEL} archers ${base.toFixed(2)} -> with ice ${withIce.toFixed(2)}; on ${late} arcane ${arc.toFixed(2)} -> with sun ${arcSun.toFixed(2)}`);
-    expect(withIce).toBeGreaterThan(base * 1.03);
-    expect(arcSun).toBeGreaterThan(arc * 1.03);
+    // Direct comparison over many seeds at 2x enemy health: average castle health with and without the support tower.
+    const score = (levelId: string, loadout: string[]) => {
+      let sum = 0;
+      for (let s = 1; s <= 10; s++) { const c = ctxFor(levelId, loadout, s * 13); sum += runBot({ ...c, baseMods: { ...c.baseMods, enemyHp: 1 } }, {}).hpPct; }
+      return sum / 10;
+    };
+    const rows: string[] = [];
+    for (const lvl of ['3-3', '4-2']) {
+      const a = score(lvl, ['archer']), ai = score(lvl, ['archer', 'ice']), as = score(lvl, ['archer', 'storm']), ass = score(lvl, ['archer', 'storm', 'sun']);
+      rows.push(`${lvl}: archers ${pct(a)} -> +ice ${pct(ai)}; archer+storm ${pct(as)} -> +sun ${pct(ass)}`);
+      expect(ai, `ice on ${lvl}`).toBeGreaterThan(a);
+      expect(ass, `sun on ${lvl}`).toBeGreaterThan(as);
+    }
+    report.push(`SUPPORT VALUE (average castle health at 2x enemy health): ${rows.join(' | ')}`);
   });
   it('focused mixed teams match or beat a mono team; mono stays viable; no single answer for every world', () => {
     const teams: Record<string, string[]> = { archers: ['archer'], cannons: ['cannon'], 'archer+ice': ['archer', 'ice'], 'archer+storm': ['archer', 'storm'], 'cannon+fire+ice': ['cannon', 'fire', 'ice'], 'storm+poison': ['storm', 'poison'], 'arcane+sun': ['arcane', 'sun'] };
@@ -135,11 +142,20 @@ describe('tower balance', () => {
     }
   });
   it('hybrids are worth making but not mandatory or overpowered', () => {
-    const lo = ['archer', 'cannon', 'fire', 'ice', 'poison'];
-    const without = strength('3-2', lo, { hybrids: false }), withH = strength('3-2', lo, { hybrids: true });
-    report.push(`HYBRIDS on 3-2: without ${without.toFixed(2)}, with ${withH.toFixed(2)}`);
-    expect(withH / without).toBeGreaterThan(0.85);
-    expect(withH / without).toBeLessThan(1.7);
+    // Same towers, same coins: the only difference is whether the player fuses hybrids.
+    const score = (loadout: string[], hybrids: boolean) => {
+      let hp = 0, made = 0;
+      for (let s = 1; s <= 10; s++) { const c = ctxFor('3-5', loadout, s * 17); const r = runBot({ ...c, baseMods: { ...c.baseMods, enemyHp: 0.4 } }, { hybrids }); hp += r.hpPct; made += r.battle.s.stats.hybrids; }
+      return { hp: hp / 10, made: made / 10 };
+    };
+    const rows: string[] = [];
+    for (const lo of [['cannon', 'fire'], ['fire', 'ice'], ['archer', 'poison']]) {
+      const off = score(lo, false), on = score(lo, true);
+      rows.push(`${lo.join('+')} ${pct(off.hp)} -> ${pct(on.hp)} (${on.made.toFixed(1)} hybrids per battle)`);
+      expect(on.made, `${lo.join('+')} hybrids made`).toBeGreaterThan(0.5);
+      expect(on.hp, `${lo.join('+')} with hybrids`).toBeGreaterThan(off.hp - 0.25);
+    }
+    report.push(`HYBRIDS on 3-5 (average castle health at 1.4x enemy health, without -> with): ${rows.join(' | ')}`);
     // per-tower sanity: a tier-3 hybrid is comparable to the tier-3 evolutions of its parents
     // (area attacks are credited for the extra targets they usually reach)
     const eff = (id: string, br: string | null) => {

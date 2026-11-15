@@ -100,7 +100,18 @@ export function runBot(ctx: RunContext, policy: BotPolicy = {}, maxTime = 900): 
           buyIdx++;
           def = allowed[buyIdx % allowed.length];
         }
-        if (s.coins >= b.buyCost(def) && b.buyTower(def, free).ok) { buyIdx++; bought = true; }
+        // An aura tower goes where it reaches the most allies (what any player would do).
+        let slot = free;
+        if (TOWERS[def].attack.buffRate) {
+          const range = TOWERS[def].base.range;
+          let best = -1;
+          b.map.slots.forEach((p, i) => {
+            if (b.towerAt(i)) return;
+            const n = s.towers.filter((t) => Math.hypot(b.slotPos(t.slot).x - p.x, b.slotPos(t.slot).y - p.y) <= range).length;
+            if (n > best) { best = n; slot = i; }
+          });
+        }
+        if (s.coins >= b.buyCost(def) && b.buyTower(def, slot).ok) { buyIdx++; bought = true; }
       }
       // 3. upgrades when the board is full
       if (policy.upgrade !== false && coverage.every((i) => b.towerAt(i))) {

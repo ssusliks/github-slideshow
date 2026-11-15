@@ -10,7 +10,7 @@ import { BotPolicy, runBot } from './bot';
  * simple policy and grinds earlier levels when it gets stuck. Produces the data the balance
  * tests assert on (attempts per level, battle length, castle health).
  */
-export interface LevelLog { id: string; attempts: number; grinds: number; hpPct: number; time: number; gold: number; cardAvg: number; research: number; day: number }
+export interface LevelLog { id: string; attempts: number; grinds: number; hpPct: number; time: number; gold: number; cardAvg: number; research: number; day: number; maxTier: number; hybrids: number; merges: number }
 
 const HOUR = 3600000;
 
@@ -69,16 +69,16 @@ export function simulateAccount(seed: number, policy: BotPolicy = { hybrids: tru
     return res;
   };
   for (const lvl of LEVELS.slice(0, levels)) {
-    let attempts = 0, grinds = 0, won = false, last = { hpPct: 0, time: 0 };
+    let attempts = 0, grinds = 0, won = false, last = { hpPct: 0, time: 0, maxTier: 1, hybrids: 0, merges: 0 };
     while (!won && attempts < maxAttempts) {
       attempts++;
       const res = play(lvl.id, lvl.id);
       won = res.won;
-      last = { hpPct: res.hpPct, time: res.time };
+      last = { hpPct: res.hpPct, time: res.time, maxTier: res.battle.s.stats.maxTier, hybrids: res.battle.s.stats.hybrids, merges: res.battle.s.stats.merges };
       if (!won && lvl.index > 0) { play(LEVELS[lvl.index - 1].id, 'grind'); grinds++; }
     }
     const cards = g.p.loadout.map((t) => g.p.cards[t].level);
-    log.push({ id: lvl.id, attempts, grinds, hpPct: last.hpPct, time: last.time, gold: g.p.gold, cardAvg: cards.reduce((a, b) => a + b, 0) / cards.length, research: Object.values(g.p.research).reduce((a, b) => a + b, 0), day });
+    log.push({ id: lvl.id, attempts, grinds, hpPct: last.hpPct, time: last.time, maxTier: last.maxTier, hybrids: last.hybrids, merges: last.merges, gold: g.p.gold, cardAvg: cards.reduce((a, b) => a + b, 0) / cards.length, research: Object.values(g.p.research).reduce((a, b) => a + b, 0), day });
     if (!won) return { log, game: g, stuck: lvl.id };
   }
   return { log, game: g, stuck: null };

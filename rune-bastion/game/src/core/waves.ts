@@ -16,7 +16,7 @@ export const MAX_WAVE_COUNT = 22;
 export const LEVEL_SPAWN_TIME = 78;
 export const ENDLESS_WAVE_WINDOW = 18;
 /** Maps with two entrances split the defence, so their waves are a little lighter. */
-export const MULTI_PATH_BUDGET = 0.8;
+export const MULTI_PATH_BUDGET = 0.72;
 
 /**
  * Builds the spawn list of one wave: scripted groups from the level table first,

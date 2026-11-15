@@ -1,0 +1,37 @@
+===== BALANCE REPORT =====
+PROGRESSION (3 play styles x 3 accounts)
+1-1  attempts avg 1.00 max 1  castle 100%  battle  76s
+1-2  attempts avg 1.00 max 1  castle 100%  battle  82s
+1-3  attempts avg 1.00 max 1  castle  97%  battle 114s
+1-4  attempts avg 1.00 max 1  castle 100%  battle 101s
+1-5  attempts avg 1.00 max 1  castle  93%  battle 130s
+1-6  attempts avg 1.00 max 1  castle  85%  battle 123s
+2-1  attempts avg 1.00 max 1  castle 100%  battle  92s
+2-2  attempts avg 1.00 max 1  castle  86%  battle  77s
+2-3  attempts avg 1.00 max 1  castle  86%  battle 107s
+2-4  attempts avg 1.00 max 1  castle  94%  battle 124s
+2-5  attempts avg 1.00 max 1  castle  90%  battle 117s
+2-6  attempts avg 1.11 max 2  castle  44%  battle 178s
+3-1  attempts avg 1.00 max 1  castle 100%  battle 100s
+3-2  attempts avg 1.00 max 1  castle  85%  battle  99s
+3-3  attempts avg 1.00 max 1  castle  80%  battle 127s
+3-4  attempts avg 1.67 max 3  castle  43%  battle 115s
+3-5  attempts avg 1.00 max 1  castle  90%  battle 155s
+3-6  attempts avg 1.00 max 1  castle  23%  battle 175s
+4-1  attempts avg 1.00 max 1  castle  67%  battle  95s
+4-2  attempts avg 1.00 max 1  castle  73%  battle 137s
+4-3  attempts avg 1.11 max 2  castle  57%  battle 129s
+4-4  attempts avg 1.44 max 2  castle  79%  battle 150s
+4-5  attempts avg 1.00 max 1  castle  81%  battle 167s
+4-6  attempts avg 1.00 max 1  castle  23%  battle 219s
+average attempts per level: 1.06, worst single case: 3
+BATTLE LENGTH at x1 speed: average 2.6 min, shortest 1.7 min, longest 4.3 min
+CAMPAIGN LENGTH: 4-5 days at six battles a day
+SOLO STRENGTH on 2-5 (enemy health a mono-tower defence still beats): archer 5.55, cannon 3.22, fire 3.25, ice 2.36, poison 2.38, storm 2.95, arcane 2.46, sun 1.88
+SUPPORT VALUE (average castle health at 2x enemy health): 3-3: archers 30% -> +ice 68%; archer+storm 23% -> +sun 37% | 4-2: archers 33% -> +ice 69%; archer+storm 0% -> +sun 4%
+TEAMS on 2-5: archer+ice 4.39, cannon+fire+ice 4.03, archers 3.54, cannons 3.22, arcane+sun 3.05, archer+storm 2.46, storm+poison 2.07
+TEAMS on 3-2: archer+ice 4.63, archers 3.05, arcane+sun 2.57, cannons 2.51, storm+poison 2.33, archer+storm 2.21, cannon+fire+ice 2.14
+TEAMS on 4-4: archer+ice 2.86, cannon+fire+ice 2.16, arcane+sun 1.99, cannons 1.55, archer+storm 1.55, archers 1.54, storm+poison 1.41
+HYBRIDS on 3-5 (average castle health at 1.4x enemy health, without -> with): cannon+fire 54% -> 45% (2.7 hybrids per battle) | fire+ice 45% -> 45% (1.3 hybrids per battle) | archer+poison 65% -> 83% (3.7 hybrids per battle)
+BOOST DEPENDENCE on 2-3: best picks 3.70, random picks 3.70, worst picks 3.05
+==========================
