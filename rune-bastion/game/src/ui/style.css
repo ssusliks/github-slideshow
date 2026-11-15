@@ -111,7 +111,7 @@ p { margin: 6px 0; line-height: 1.35; white-space: pre-line; }
 .branches { display: grid; gap: 8px; } .branch { display: flex; gap: 8px; background: var(--paper-2); border-radius: 12px; padding: 6px; align-items: center; }
 .tiers { display: flex; gap: 4px; } .tier-cell { flex: 1; text-align: center; background: var(--paper-2); border-radius: 10px; } .tier-cell img { width: 100%; aspect-ratio: 1; } .tier-cell small { font-weight: 900; }
 .thumb { width: 60px; height: 60px; flex: none; background: var(--paper-2); border-radius: 12px; } .thumb.lg { width: 84px; height: 84px; }
-.stats { display: flex; gap: 10px; font-size: 13px; font-weight: 800; } .stats.wrap { flex-wrap: wrap; gap: 4px 10px; } .stats .dps { color: var(--danger-d); }
+.stats { display: flex; gap: 10px; font-size: 13px; font-weight: 800; } .stats span { white-space: nowrap; } .stats.wrap { flex-wrap: wrap; gap: 4px 10px; } .stats .dps { color: var(--danger-d); }
 .stats i { font-style: normal; font-size: 11px; margin-left: 2px; } .stats i.up { color: var(--primary-d); } .stats i.down { color: var(--danger); }
 .fx-list { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; } .fx-list span { background: #eef0ff; border-radius: 8px; padding: 2px 7px; font-size: 12px; font-weight: 600; } .fx-list span.new { background: #dff7d0; box-shadow: inset 0 0 0 1.5px var(--primary); }
 
@@ -169,6 +169,7 @@ select, input[type=email], input[type=password], textarea { width: 100%; border:
 .wavebox { flex: 1; background: rgba(43,47,85,.9); color: #fff; border-radius: 14px; padding: 4px 10px; text-align: center; font-weight: 800; font-size: 13px; box-shadow: 0 2px 6px rgba(0,0,0,.25); } .wavebox .bar.thin { background: rgba(255,255,255,.2); margin: 3px 0 1px; }
 .hud-side-left { position: absolute; top: calc(var(--sat) + 52px); left: 8px; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
 .hud-btn { min-height: 42px; width: 46px; padding: 0; border-radius: 14px; font-size: 16px; background: rgba(255,255,255,.92); pointer-events: auto; }
+.pause-ico { display: block; width: 14px; height: 16px; border-left: 5px solid var(--ink); border-right: 5px solid var(--ink); }
 .abilities { position: absolute; right: 8px; bottom: calc(var(--sab) + 190px); display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
 .ability { position: relative; width: 58px; height: 58px; min-height: 0; padding: 0; border-radius: 50%; background: #fff; border: 3px solid var(--blue); border-bottom-width: 5px; overflow: hidden; pointer-events: auto; }
 .ability .ab-icon { font-size: 26px; line-height: 1; } .ability.active { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(242,169,59,.6); }

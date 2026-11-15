@@ -102,7 +102,7 @@ export class BattleScreen {
         h('div.pill.hp-pill', null, h('span.ico', null, '❤️'), h('div.bar', null, E.hpFill), E.hpText),
         h('div.wavebox', null, E.wave, h('div.bar.thin', null, E.waveFill)),
         h('div.pill.coin-pill', null, h('span.ico', null, '🪙'), E.coins)),
-      h('div.hud-side-left', null, btn('⏸', () => this.togglePause(true), 'hud-btn', { id: 'btn-pause', 'aria-label': t('ui.pause') }), E.speed),
+      h('div.hud-side-left', null, btn(h('span.pause-ico'), () => this.togglePause(true), 'hud-btn', { id: 'btn-pause', 'aria-label': t('ui.pause') }), E.speed),
       E.abilities, E.banner, E.tut, E.hand, E.hint,
       h('div.hud-bottom', null, E.start, E.shop, E.panel));
   }
@@ -516,6 +516,7 @@ export class BattleScreen {
     b.events.length = 0;
     if (this.ended || this.errored) return;
     if (s.phase === 'boost' && !this.boostOpen) this.openBoosts();
+    else if (s.phase !== 'boost' && this.boostOpen) { this.boostOpen = false; this.closeBoost?.(); this.closeBoost = null; }
     if ((s.phase === 'won' || s.phase === 'lost') && !this.ended) { this.onFinished(); return; }
     this.hudT -= dt;
     if (this.hudT <= 0) { this.hudT = 0.1; this.updateHud(); }

@@ -143,8 +143,10 @@ export class PurchaseService {
   /** 'ok' = genuine, 'bad' = rejected by the store/server, 'retry' = could not reach the verifier. */
   private async verify(tx: StoreTx): Promise<'ok' | 'bad' | 'retry'> {
     if (!IAP_PRODUCTS.some((p) => p.id === tx.productId)) return 'bad';
-    if (tx.platform === 'sandbox') return CONFIG.dev ? 'ok' : 'bad';
-    if (!cloudConfigured()) return 'ok'; // no backend deployed: trust the platform store's own validation
+    // Sandbox transactions only exist in development builds; release builds always refuse them.
+    if (tx.platform === 'sandbox' && !CONFIG.dev) return 'bad';
+    // No backend deployed: rely on the platform store's own validation (or the dev sandbox).
+    if (!cloudConfigured()) return 'ok';
     const r = await api('POST', '/v1/iap/verify', { platform: tx.platform, productId: tx.productId, transactionId: tx.transactionId, purchaseToken: tx.purchaseToken, receipt: tx.receipt }, this.token());
     if (r.ok && r.data?.valid === true) return 'ok';
     if (r.status === 400 || r.status === 402 || r.status === 409 || (r.ok && r.data?.valid === false)) return 'bad';

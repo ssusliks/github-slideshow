@@ -1,0 +1,22 @@
+// Visual check helper: builds an advanced board and captures screenshots of battle states.
+import { launch, device, open, slotPt, drag, cardPt, battleState, fastForward } from './lib.mjs';
+const browser = await launch();
+const { page } = await device(browser, { dpr: 2 });
+await open(page);
+await page.evaluate(() => { const g = window.__app.game; for (const l of ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '2-1', '2-2']) g.p.campaign[l] = { stars: 3, clears: 1 }; for (const t of ['ice', 'poison', 'storm']) g.p.cards[t] = { level: 1, mastery: 0 }; g.p.research.alchemy = 3; g.p.research.loadout = 2; g.p.loadout = ['archer', 'cannon', 'fire', 'ice', 'poison', 'storm']; window.__app.startBattle(process?.x ?? '2-3', 'campaign'); }).catch(async () => { await page.evaluate(() => window.__app.startBattle('2-3', 'campaign')); });
+await page.waitForFunction(() => !!window.__app.battle);
+await page.waitForTimeout(800);
+await page.screenshot({ path: 'e2e/out/look-boost.png' });
+await page.evaluate(() => { const b = window.__app.battle.b; b.chooseBoost(0); b.s.coins = 5000; const L = b.s.ctx.loadout; let i = 0; for (let pass = 0; pass < 6; pass++) { for (let s = 0; s < b.map.slots.length; s++) if (!b.towerAt(s)) b.buyTower(L[i++ % L.length], s); for (const a of [...b.s.towers]) for (const c of [...b.s.towers]) if (a !== c && b.tower(a.id) && b.tower(c.id) && b.mergeCheck(a.id, c.id).ok) b.merge(a.id, c.id, pass % 2); } b.s.coins = 300; b.startWave(); });
+await page.waitForTimeout(600);
+await page.evaluate(() => { const b = window.__app.battle.b; for (let i = 0; i < 30 * 9; i++) b.step(); });
+await page.waitForTimeout(1200);
+await page.screenshot({ path: 'e2e/out/look-fight.png' });
+const st = await battleState(page);
+const t = st.towers[0];
+const p = await page.evaluate((slot) => { const b = window.__app.battle; const s = b.b.slotPos(slot); return b.view.screenOf(s.x, s.y, 0.4); }, t.slot);
+await page.touchscreen.tap(p.x, p.y);
+await page.waitForTimeout(500);
+await page.screenshot({ path: 'e2e/out/look-panel.png' });
+console.log(JSON.stringify(st.towers.map((x) => `${x.def}${x.tier}${x.branch ? ':' + x.branch : ''}`)), page.errors);
+await browser.close();

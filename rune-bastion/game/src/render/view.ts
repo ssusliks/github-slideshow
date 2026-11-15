@@ -245,7 +245,8 @@ export class BattleView {
     this.up.crossVectors(dir, this.right).normalize();
     const mid = new THREE.Vector3((map.cols - 1) / 2, 0, (map.rows - 1) / 2);
     let maxX = 0, minY = Infinity, maxY = -Infinity;
-    for (const [x, z, y] of [[-0.6, -0.6, 0], [map.cols - 0.4, -0.6, 1.2], [-0.6, map.rows - 0.4, 0], [map.cols - 0.4, map.rows - 0.4, 0], [-0.6, -0.6, 1.2], [map.cols - 0.4, map.rows - 0.4, 1.2]]) {
+    const lo = -0.9, hx = map.cols - 0.1, hz = map.rows - 0.1;
+    for (const [x, z, y] of [[lo, lo, 0], [hx, lo, 0], [lo, hz, 0], [hx, hz, 0], [lo, lo, 1.3], [hx, lo, 1.3], [lo, hz, -0.6], [hx, hz, -0.6]]) {
       const d = new THREE.Vector3(x, y, z).sub(mid);
       maxX = Math.max(maxX, Math.abs(d.dot(this.right)));
       const v = d.dot(this.up);
@@ -253,7 +254,7 @@ export class BattleView {
     }
     const aspect = this.w / this.h;
     const usable = Math.max(0.3, (this.h - this.insets.top - this.insets.bottom) / this.h);
-    const halfWByWidth = maxX + 0.15;
+    const halfWByWidth = maxX + 0.05;
     const halfWByHeight = ((maxY - minY) / 2 / usable) * aspect;
     this.fitHalfW = Math.max(halfWByWidth, halfWByHeight);
     if (!keep) {
