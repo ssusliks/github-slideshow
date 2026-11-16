@@ -34,9 +34,10 @@ export async function installLifecycle(l: Lifecycle): Promise<void> {
   }
 }
 
-export async function nativePreferences(): Promise<any | null> {
+// Wrapped in an object: returning the Capacitor plugin proxy from an async fn makes the runtime call proxy.then(), which throws on Android.
+export async function nativePreferences(): Promise<{ prefs: any } | null> {
   if (!isNative()) return null;
-  try { return (await import('@capacitor/preferences')).Preferences; } catch { return null; }
+  try { return { prefs: (await import('@capacitor/preferences')).Preferences }; } catch { return null; }
 }
 
 let hapticsMod: any = null;

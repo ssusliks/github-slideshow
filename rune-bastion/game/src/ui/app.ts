@@ -66,7 +66,7 @@ export class App {
   // ------------------------------------------------------------------ boot
   async boot(): Promise<void> {
     applyRuntimeOverrides(location.search);
-    const prefs = await nativePreferences();
+    const prefs = (await nativePreferences())?.prefs;
     if (prefs) await this.kv.attachNative(prefs);
     this.log = new Log(this.kv);
     this.log.installGlobalHandlers();
